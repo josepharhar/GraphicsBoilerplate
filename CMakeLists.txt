@@ -1,10 +1,8 @@
-# gcc -c
-add_library(static_lib STATIC static_lib.cpp)
-# gcc -shared
-add_library(shared_lib SHARED shared_lib.cpp)
-
 # gcc
-add_executable(asdf asdf.cpp)
+add_executable(main main.cpp)
 
 # ld
-target_link_libraries(asdf shared_lib)
+target_link_libraries(main shared_lib)
+
+# -I./hello_library
+include_directories(hello_library)
