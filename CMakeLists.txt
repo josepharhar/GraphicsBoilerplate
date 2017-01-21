@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.7)
 
 # Name of the project
-project(asgn4)
+project(GraphicsBoilerplate)
 
 # Use glob to get the list of all source files.
 file(GLOB_RECURSE SOURCES "src/*.cpp")
@@ -14,20 +14,13 @@ file(GLOB_RECURSE GLSL "resources/*.glsl")
 # Set the executable.
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES} ${HEADERS} ${GLSL})
 
-# Get the GLM environment variable. Since GLM is a header-only library, we
-# just need to add it to the include directory.
-set(GLM_INCLUDE_DIR "$ENV{GLM_INCLUDE_DIR}")
-if(NOT GLM_INCLUDE_DIR)
-  MESSAGE(FATAL_ERROR "Please point the environment variable GLM_INCLUDE_DIR to the include directory of your GLM installation.")
-endif()
-include_directories(${GLM_INCLUDE_DIR})
+# Since GLM is a header-only library,
+# we just need to add it to the include directory.
+# TODO check if the git submodule was populated first?
+include_directories("deps/glm")
 
-# Get the GLFW environment variable. There should be a CMakeLists.txt in the 
-# specified directory.
-set(GLFW_DIR "$ENV{GLFW_DIR}")
-if(NOT GLFW_DIR)
-  message(FATAL_ERROR "Please point the environment variable GLFW_DIR to the root directory of your GLFW3 installation.")
-endif()
+# There should be a CMakeLists.txt in the specified directory.
+set(GLFW_DIR "deps/glfw")
 option(GLFW_BUILD_EXAMPLES "GLFW_BUILD_EXAMPLES" OFF)
 option(GLFW_BUILD_TESTS "GLFW_BUILD_TESTS" OFF)
 option(GLFW_BUILD_DOCS "GLFW_BUILD_DOCS" OFF)
@@ -39,11 +32,8 @@ endif()
 include_directories(${GLFW_DIR}/include)
 target_link_libraries(${CMAKE_PROJECT_NAME} glfw ${GLFW_LIBRARIES})
 
-# Get the GLEW environment variable.
-set(GLEW_DIR "$ENV{GLEW_DIR}")
-if(NOT GLEW_DIR)
-  message(FATAL_ERROR "Please point the environment variable GLEW_DIR to the root directory of your GLEW installation.")
-endif()
+set(GLEW_DIR "deps/glew")
+#set(GLEW_DIR "/home/jarhar/glew-tar")
 include_directories(${GLEW_DIR}/include)
 if(WIN32)
   # With prebuilt binaries
